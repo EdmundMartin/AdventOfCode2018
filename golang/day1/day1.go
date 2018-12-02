@@ -18,15 +18,21 @@ func parseLine(line string) int {
 }
 
 func main() {
-	freq := 0
-	freqCache := make(map[int]struct{})
-
 	input, err := ioutil.ReadFile("input.txt")
 
 	if err != nil {
 		log.Panicf("Could not read file, %s", err)
 	}
+	scanner := bufio.NewScanner(bytes.NewReader(input))
+	freq := 0
+	for scanner.Scan() {
+		tmpResult := parseLine(scanner.Text())
+		freq += tmpResult
+	}
+	fmt.Printf("Part1: Final frequency is %d\n", freq)
 
+	freq = 0
+	freqCache := make(map[int]struct{})
 	for {
 		scanner := bufio.NewScanner(bytes.NewReader(input))
 
